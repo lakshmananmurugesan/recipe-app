@@ -1,0 +1,25 @@
+.title {
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.recipe-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  font-style: italic;
+}
+
+.recipe-item {
+  width: 30%; /* Adjust width as needed */
+  margin-bottom: 20px; /* Add margin between items */
+}
+
+.recipe-item img {
+  width: 100%;
+  height: auto;
+}

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import './recipes.css';
+import config from '../config';
 
 const Recipes = () => {
   const [data, setData] = useState(null);
@@ -9,7 +10,7 @@ const Recipes = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://api.spoonacular.com/recipes/complexSearch?apiKey=a6b0d31b49844233ae2bc10277c321cf&number=50');
+        const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${config.RECIPE_API_KEY}&number=50`);
         setData(response.data);
       } catch (error) {
         setError(error);
@@ -20,10 +21,10 @@ const Recipes = () => {
   }, []);
   
   return (
-    <div class="container">
+    <div className="container">
       {data ? (
         <div>
-          <h2 class="title">Recipes list</h2>
+          <h2 className="title">Recipes list</h2>
           <div className="recipe-container">
             {data.results.map(item => (
               <div key={item.id} className="recipe-item">

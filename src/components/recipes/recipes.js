@@ -1,7 +1,7 @@
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import './recipes.css';
-import config from '../config';
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import "./recipes.css";
+import config from "../../config";
 
 const Recipes = () => {
   const [data, setData] = useState(null);
@@ -10,7 +10,9 @@ const Recipes = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${config.RECIPE_API_KEY}&number=50`);
+        const response = await axios.get(
+          `https://api.spoonacular.com/recipes/complexSearch?apiKey=${config.RECIPE_API_KEY}&number=50`
+        );
         setData(response.data);
       } catch (error) {
         setError(error);
@@ -27,11 +29,11 @@ const Recipes = () => {
 
     // Construct the monitor payload
     const monitorPayload = {
-      name: 'My Monitor',
-      type: 'metric alert',
-      query: 'avg(last_5m):sum:system.load.5{host:host0} > 1',
-      message: 'Load spike on host0',
-      tags: ['env:prod', 'team:backend'],
+      name: "My Monitor",
+      type: "metric alert",
+      query: "avg(last_5m):sum:system.load.5{host:host0} > 1",
+      message: "Load spike on host0",
+      tags: ["env:prod", "team:backend"],
       options: {
         thresholds: {
           critical: 1.5,
@@ -40,33 +42,36 @@ const Recipes = () => {
     };
 
     // Define Datadog API endpoint for creating monitors
-    const apiUrl = 'https://api.datadoghq.com/api/v1/monitor';
+    const apiUrl = "https://api.datadoghq.com/api/v1/monitor";
 
     // Define headers for API request
     const headers = {
-      'Content-Type': 'application/json',
-      'DD-API-KEY': apiKey,
-      'DD-APPLICATION-KEY': appKey
+      "Content-Type": "application/json",
+      "DD-API-KEY": apiKey,
+      "DD-APPLICATION-KEY": appKey,
     };
 
     // Make API request to create the monitor
-    axios.post(apiUrl, monitorPayload, { headers })
-      .then(response => {
-        console.log('Monitor created successfully:', response?.data);
+    axios
+      .post(apiUrl, monitorPayload, { headers })
+      .then((response) => {
+        console.log("Monitor created successfully:", response?.data);
       })
-      .catch(error => {
-        console.error('Error creating monitor:', error?.response?.data);
+      .catch((error) => {
+        console.error("Error creating monitor:", error?.response?.data);
       });
   };
-  
+
   return (
     <div className="container">
       {data ? (
         <div>
-          <h2 className="title">Recipes list</h2>
-          <button onClick={createMonitor}>Create Monitor</button>
+          <div className="title">
+            <h2>Recipes list</h2>
+            <button className="button" onClick={createMonitor}>Create Monitor</button>
+          </div>
           <div className="recipe-container">
-            {data.results.map(item => (
+            {data.results.map((item) => (
               <div key={item.id} className="recipe-item">
                 <h4>{item.title}</h4>
                 <img src={item.image} alt={item.title} />
